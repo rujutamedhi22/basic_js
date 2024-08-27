@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom T-Shirt</title>
+    <script>
+        function validateForm() {
+            var tagline = document.forms["tshirtForm"]["tagline"].value;
+            if (tagline.length > 50) {
+                alert("Tagline must be less than 50 characters.");
+                return false;
+            }
+
+            var phone = document.forms["tshirtForm"]["phone"].value;
+            if (!/^\d{10}$/.test(phone)) {
+                alert("Phone number must be exactly 10 digits.");
+                return false;
+            }
+
+            var email = document.forms["tshirtForm"]["email"].value;
+            if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email)) {
+                alert("Please enter a valid email address.");
+                return false;
+            }
+            var deliveryDate = new Date(document.forms["tshirtForm"]["deliveryDate"].value);
+            var today = new Date();
+            if (deliveryDate <= today) {
+                alert("Delivery date must be after today's date.");
+                return false;
+            }
+            return generateReceipt();
+        }
+
+        function generateReceipt() {
+            var receiptWindow = window.open("", "Receipt", "width=100vw,height=400");
+            var today = new Date();
+            receiptWindow.document.write("<h2>Order Receipt</h2>");
+            receiptWindow.document.write("<p>Thank you for your order!</p>");
+            receiptWindow.document.write("<p><b>Order Date:</b> " + today.toLocaleDateString() + "</p>");
+            receiptWindow.document.write("<p><b>Tagline:</b> " + document.forms["tshirtForm"]["tagline"].value + "</p>");
+            receiptWindow.document.write("<p><b>Color:</b> " + document.forms["tshirtForm"]["color"].value + "</p>");
+            receiptWindow.document.write("<p><b>Size:</b> " + document.forms["tshirtForm"]["size"].value + "</p>");
+            receiptWindow.document.write("<p><b>Quantity:</b> " + document.forms["tshirtForm"]["quantity"].value + "</p>");
+            receiptWindow.document.write("<p><b>Name:</b> " + document.forms["tshirtForm"]["name"].value + "</p>");
+            receiptWindow.document.write("<p><b>Address:</b> " + document.forms["tshirtForm"]["address"].value + "</p>");
+            receiptWindow.document.write("<p><b>Email:</b> " + document.forms["tshirtForm"]["email"].value + "</p>");
+            receiptWindow.document.write("<p><b>Phone Number:</b> " + document.forms["tshirtForm"]["phone"].value + "</p>");
+            receiptWindow.document.write("<p><b>Delivery Date:</b> " + document.forms["tshirtForm"]["deliveryDate"].value + "</p>");
+            receiptWindow.document.write("<p><b>Additional Comments:</b> " + document.forms["tshirtForm"]["comments"].value + "</p>");
+            receiptWindow.document.write("<p><b>Receipt Generated on:</b> " + today + "</p>");
+            receiptWindow.document.close();
+        }
+    </script>
+</head>
+
+<body bgcolor="beige">
+    <center>
+        <font color="Blue">
+            <h2>Get your Customized T-Shirts now!!</h2>
+        </font>
+    </center>
+    <form name="tshirtForm">
+        <fieldset>
+            <legend>Customize Your T-Shirt</legend>
+
+            <label>Tagline on the Shirt:</label>
+            <input type="text" name="tagline" placeholder="Enter your tagline" maxlength="50"><br><br>
+
+            <label>Color:</label>
+            <select name="color" required>
+                <option value="">Select a color</option>
+                <option value="white">White</option>
+                <option value="black">Black</option>
+                <option value="red">Red</option>
+                <option value="blue">Blue</option>
+                <option value="green">Green</option>
+            </select><br><br>
+
+            <label>Size:</label>
+            <select name="size" required>
+                <option value="">Select a size</option>
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+                <option value="xl">XL</option>
+                <option value="xxl">XXL</option>
+            </select><br><br>
+
+            <label>Quantity:</label>
+            <input type="number" name="quantity" min="1" placeholder="Enter quantity" required><br><br>
+
+            <label>Delivery Date:</label>
+            <input type="date" name="deliveryDate" required><br><br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Delivery Details</legend>
+
+            <label>Name:</label>
+            <input type="text" name="name" placeholder="Enter recipient's name" required><br><br>
+
+            <label>Address:</label>
+            <input type="text" name="address" placeholder="Enter address" required><br><br>
+
+            <label>Email:</label>
+            <input type="email" name="email" placeholder="Enter email" required><br><br>
+
+            <label>Phone Number:</label>
+            <input type="tel" name="phone" placeholder="Enter phone number" pattern="[0-9]{10}" required><br><br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Additional Comments</legend>
+
+            <label>Additional Comments or Special Instructions:</label><br>
+            <textarea name="comments" placeholder="Enter any additional comments or special instructions" rows="4" cols="50"></textarea><br><br>
+        </fieldset>
+
+        <button onclick="validateForm()" type="submit">Submit Order</button>
+        <button type="reset">Reset Form</button>
+    </form>
+</body>
+
+</html>
